@@ -8,7 +8,6 @@ export default class Currency {
     return this._code;
   }
 
-  //changes the code value
   set code(x) {
     this._code = x;
   }
@@ -17,7 +16,6 @@ export default class Currency {
     return this._name;
   }
 
-  //Changes the name value
   set name(y) {
     this._name = y;
   }
