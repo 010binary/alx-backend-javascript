@@ -6,9 +6,8 @@ const http = require('http');
  * @param {Object} res - The response object
  */
 const app = http.createServer((req, res) => {
-  
   res.writeHead(200, { 'Content-Type': 'text/plain' });
-  
+
   res.end('Hello Holberton School!');
 });
 

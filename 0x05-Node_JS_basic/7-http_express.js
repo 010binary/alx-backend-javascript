@@ -1,42 +1,39 @@
 const express = require('express');
 const fs = require('fs');
-const readFileAsync = require('./3-read_file_async')
 
 /**
  * Count the number of students in a database.
  * @param {string} database - Path to the CSV file.
  * @returns {Promise<Object>} The number of students in the database.
  */
-const countStudents = (database) => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(database, 'utf-8', (err, data) => {
-      if (err) {
-        reject(new Error('Cannot load the database'));
-      } else {
-        const content = data.trim().split('\n');
-        const students = content.slice(1).filter(line => line !== '');
-        const csStudents = [];
-        const sweStudents = [];
+const countStudents = (database) => new Promise((resolve, reject) => {
+  fs.readFile(database, 'utf-8', (err, data) => {
+    if (err) {
+      reject(new Error('Cannot load the database'));
+    } else {
+      const content = data.trim().split('\n');
+      const students = content.slice(1).filter((line) => line !== '');
+      const csStudents = [];
+      const sweStudents = [];
 
-        students.forEach(student => {
-          const [firstname, , , field] = student.split(',');
-          if (field === 'CS') {
-            csStudents.push(firstname);
-          } else if (field === 'SWE') {
-            sweStudents.push(firstname);
-          }
-        });
+      students.forEach((student) => {
+        const [firstname, , , field] = student.split(',');
+        if (field === 'CS') {
+          csStudents.push(firstname);
+        } else if (field === 'SWE') {
+          sweStudents.push(firstname);
+        }
+      });
 
-        const totalStudents = students.length;
-        resolve({
-          totalStudents,
-          cs: { count: csStudents.length, list: csStudents },
-          swe: { count: sweStudents.length, list: sweStudents }
-        });
-      }
-    });
+      const totalStudents = students.length;
+      resolve({
+        totalStudents,
+        cs: { count: csStudents.length, list: csStudents },
+        swe: { count: sweStudents.length, list: sweStudents },
+      });
+    }
   });
-};
+});
 
 // Initialize the Express app
 const app = express();

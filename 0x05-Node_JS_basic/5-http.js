@@ -1,6 +1,6 @@
-const http = require("http");
-const url = require("url");
-const fs = require("fs").promises;
+const http = require('http');
+const url = require('url');
+const fs = require('fs').promises;
 
 /**
  * Count the number of students in a database.
@@ -9,13 +9,13 @@ const fs = require("fs").promises;
  */
 const countStudents = async (path) => {
   try {
-    const data = await fs.readFile(path, "utf8");
+    const data = await fs.readFile(path, 'utf8');
     const rows = data
       .trim()
-      .split("\n")
+      .split('\n')
       .filter((row) => row);
 
-    const students = rows.slice(1).map((row) => row.split(","));
+    const students = rows.slice(1).map((row) => row.split(','));
 
     let response = `Number of students: ${students.length}\n`;
 
@@ -34,24 +34,24 @@ const countStudents = async (path) => {
     for (const [field, firstNames] of Object.entries(fields)) {
       response += `Number of students in ${field}: ${
         firstNames.length
-      }. List: ${firstNames.join(", ")}\n`;
+      }. List: ${firstNames.join(', ')}\n`;
     }
 
     return response.trim();
   } catch (error) {
-    throw new Error("Cannot load the database");
+    throw new Error('Cannot load the database');
   }
 };
 
 const app = http.createServer(async (req, res) => {
   const reqUrl = url.parse(req.url, true);
 
-  if (reqUrl.pathname === "/") {
-    res.writeHead(200, { "Content-Type": "text/plain" });
-    res.end("Hello Holberton School!");
-  } else if (reqUrl.pathname === "/students") {
-    res.writeHead(200, { "Content-Type": "text/plain" });
-    res.write("This is the list of our students\n");
+  if (reqUrl.pathname === '/') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Hello Holberton School!');
+  } else if (reqUrl.pathname === '/students') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.write('This is the list of our students\n');
 
     try {
       const databasePath = process.argv[2];
@@ -61,8 +61,8 @@ const app = http.createServer(async (req, res) => {
       res.end(error.message);
     }
   } else {
-    res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end("Not Found");
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('Not Found');
   }
 });
 
