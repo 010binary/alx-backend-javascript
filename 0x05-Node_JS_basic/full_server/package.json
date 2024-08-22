@@ -2,6 +2,7 @@
   "name": "full_server",
   "version": "1.0.0",
   "description": "a project for completion of my alx backend course",
+  "type":"module",
   "main": "server.js",
   "scripts": {
     "start": "babel-node server.js"
